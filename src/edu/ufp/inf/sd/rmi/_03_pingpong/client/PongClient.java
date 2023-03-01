@@ -1,15 +1,8 @@
 package edu.ufp.inf.sd.rmi._03_pingpong.client;
 
 
-import edu.ufp.inf.sd.rmi._03_pingpong.server.Ball;
-import edu.ufp.inf.sd.rmi._03_pingpong.server.PingRI;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
 import java.rmi.RemoteException;
-import java.rmi.NotBoundException;
-import java.rmi.Remote;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

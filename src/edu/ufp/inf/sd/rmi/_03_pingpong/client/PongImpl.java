@@ -19,7 +19,7 @@ public class PongImpl extends UnicastRemoteObject implements PongRI {
     public PongImpl(SetupContextRMI contextRMI, int id) throws RemoteException {
         super();
         this.contextRMI = contextRMI;
-        this.stub = lookupService();
+        lookupService();
         this.stub.ping(new Ball(id), this);
     }
 
@@ -31,11 +31,10 @@ public class PongImpl extends UnicastRemoteObject implements PongRI {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        lookupService().ping(ball, this);
+        this.stub.ping(ball, this);
     }
 
-    private PingRI lookupService() {
-        PingRI stub = null;
+    private void lookupService() {
         try {
             //Get proxy MAIL_TO_ADDR rmiregistry
             Registry registry = this.contextRMI.getRegistry();
@@ -45,7 +44,7 @@ public class PongImpl extends UnicastRemoteObject implements PongRI {
                 String serviceUrl = contextRMI.getServicesUrl(0);
                 Logger.getLogger(this.getClass().getName()).log(Level.INFO, "going MAIL_TO_ADDR lookup service @ {0}", serviceUrl);
                 //============ Get proxy MAIL_TO_ADDR Ping service ============
-                stub = (PingRI) registry.lookup(serviceUrl);
+                this.stub = (PingRI) registry.lookup(serviceUrl);
             }
             else {
                 Logger.getLogger(this.getClass().getName()).log(Level.INFO, "registry not bound (check IPs). :(");
@@ -54,7 +53,6 @@ public class PongImpl extends UnicastRemoteObject implements PongRI {
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        return stub;
     }
 
 }

@@ -29,7 +29,7 @@ public class ThreadPool {
     private final PoolThread[] poolAvailableThreads;
     /** List of Runnable Sessions that will be picked (one-by-one) in FIFO 
      * manner by the existing threads */
-    private final LinkedList<Runnable> listRunnableThreads = new LinkedList();
+    private final LinkedList<Runnable> listRunnableThreads = new LinkedList<>();
 
     /**
      * Constructor of the pool of threads.
