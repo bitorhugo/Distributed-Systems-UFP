@@ -24,6 +24,7 @@ public class PingImpl extends UnicastRemoteObject implements PingRI {
                 this.stub.pong(this.ball);
             } catch (RemoteException e) {
                 e.printStackTrace();
+                
             }
         }    
     }
