@@ -55,6 +55,7 @@ public class PingImpl extends UnicastRemoteObject implements PingRI, Runnable {
     @Override
     public void run() {
         try {
+            System.out.println("Ping: ball=" + this.ball.getPlayerID());
             this.stub.pong(this.ball);
         } catch (RemoteException e) {
             e.printStackTrace();
