@@ -1,8 +1,12 @@
-package edu.ufp.inf.sd.rmi._03_pingpong.client;
+package edu.ufp.inf.sd.rmi._04_diglib.client;
 
-
+import edu.ufp.inf.sd.rmi._04_diglib.server.diglibfactory.*;
+import edu.ufp.inf.sd.rmi._04_diglib.server.session.DigLibSessionRI;
+import edu.ufp.inf.sd.rmi._04_diglib.server.user.User;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,11 +23,13 @@ import java.util.logging.Logger;
  * @author Rui S. Moreira
  * @version 3.0
  */
-public class PongClient {
+public class DigLibClient {
 
     private SetupContextRMI contextRMI;
+    private DigLibFactoryRI stub;
 
-    public PongClient(String args[]) {             // args -> localhost 1099 PingPongService
+
+    public DigLibClient(String args[]) {
         try {
             //List ans set args
             SetupContextRMI.printArgs(this.getClass().getName(), args);
@@ -34,19 +40,32 @@ public class PongClient {
             // http:localhost:1099/{ServiceName}
             this.contextRMI = new SetupContextRMI(this.getClass(), registryIP, registryPort, new String[]{serviceName});
         } catch (Exception e) {
-            Logger.getLogger(PongClient.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(DigLibClient.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
-    private void playService() {
-        try {
-            for (int i = 0; i < 5; ++i) {
-                new PongImpl(contextRMI, i); // create i number of clients
-            }
-            Logger.getLogger(this.getClass().getName()).log(Level.INFO, "going MAIL_TO_ADDR finish, bye. ;)");
-        } catch (RemoteException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+    private void lookup() {
+        Registry reg = this.contextRMI.getRegistry();
+        if (reg == null) {
+            System.out.println("Registry is null");
         }
+        String serviceUrl = contextRMI.getServicesUrl(0);
+        try {
+            this.stub = (DigLibFactoryRI) reg.lookup(serviceUrl);
+        } catch (RemoteException | NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void playService() {
+        User u = new User("Bitor", "123");
+        try {
+            DigLibSessionRI session = this.stub.login(u);
+            session.search(null, null);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) {
@@ -54,10 +73,9 @@ public class PongClient {
             System.err.println("usage: java [options] edu.ufp.sd.inf.rmi._02_calculator.server.CalculatorClient <rmi_registry_ip> <rmi_registry_port> <service_name>");
             System.exit(-1);
         } else {
-            //1. ============ Setup client RMI context ============
-            PongClient hwc = new PongClient(args);
-            //3. ============ Play with service ============
-            hwc.playService();
+            DigLibClient dlc = new DigLibClient(args);
+            dlc.lookup();
+            dlc.playService();
         }
     }
 }

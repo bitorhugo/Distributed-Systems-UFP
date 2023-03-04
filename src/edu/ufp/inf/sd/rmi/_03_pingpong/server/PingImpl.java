@@ -9,15 +9,16 @@ import edu.ufp.inf.sd.rmi.util.threading.ThreadPool;
 public class PingImpl extends UnicastRemoteObject implements PingRI, Runnable {
 
     private ThreadPool tp;
+    private static final int numThreads = 5;
     private PongRI stub;
     private Ball ball;
     
-    private class PingThread extends Thread {
+    private class PingRunnable extends Thread {
 
         private PongRI stub;
         private Ball ball;
         
-        PingThread(PongRI clientPongRI, Ball ball) {
+        PingRunnable(PongRI clientPongRI, Ball ball) {
             this.ball = ball;
             this.stub = clientPongRI;
         }
@@ -36,7 +37,7 @@ public class PingImpl extends UnicastRemoteObject implements PingRI, Runnable {
 
     public PingImpl() throws RemoteException {
         super();
-        this.tp = new ThreadPool(5);
+        this.tp = new ThreadPool(numThreads);
     }
     
     @Override
@@ -47,7 +48,7 @@ public class PingImpl extends UnicastRemoteObject implements PingRI, Runnable {
             this.tp.execute(this);
         }
         else {
-            PingThread pt =  new PingThread(clientPongRI, ball);
+            PingRunnable pt =  new PingRunnable(clientPongRI, ball);
             pt.start();
         }
     }

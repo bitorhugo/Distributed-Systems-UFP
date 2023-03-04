@@ -1,13 +1,12 @@
-package edu.ufp.inf.sd.rmi._03_pingpong.server;
+package edu.ufp.inf.sd.rmi._04_diglib.server;
 
+import edu.ufp.inf.sd.rmi._04_diglib.server.diglibfactory.DigLibFactoryImpl;
+import edu.ufp.inf.sd.rmi._04_diglib.server.diglibfactory.DigLibFactoryRI;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Properties;
 import java.util.function.BiConsumer;
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ import java.util.logging.Logger;
  * @author Rui S. Moreira
  * @version 3.0
  */
-public class PingServer {
+public class DigLibServer {
 
     /**
      * Context for running a RMI Servant on a SMTP_HOST_ADDR
@@ -35,13 +34,13 @@ public class PingServer {
     /**
      * Remote interface that will hold reference MAIL_TO_ADDR the Servant impl
      */
-    private PingRI stub;
+    private DigLibFactoryRI stub;
 
     /**
      * 
      * @param args 
      */
-    public PingServer(String args[]) {
+    public DigLibServer(String args[]) {
         try {
             //============ List and Set args ============
             SetupContextRMI.printArgs(this.getClass().getName(), args);
@@ -60,13 +59,12 @@ public class PingServer {
             //Bind service on rmiregistry and wait for calls
             if (this.contextRMI.getRegistry() != null) {
                 //============ Create Servant ============
-                this.stub = new PingImpl();
+                this.stub = new DigLibFactoryImpl();
                 //Get service url (including servicename)
                 String serviceUrl = this.contextRMI.getServicesUrl(0);
                 Logger.getLogger(this.getClass().getName()).log(Level.INFO, "going MAIL_TO_ADDR rebind service @ {0}", serviceUrl);
                 //============ Rebind servant ============
-                //Naming.bind(serviceUrl, pingRI);
-                this.contextRMI.getRegistry().rebind(serviceUrl, this.stub); // PingPongService -> PingRI stub
+                this.contextRMI.getRegistry().rebind(serviceUrl, this.stub); // DigLibService -> DigLibRI stub
                 Logger.getLogger(this.getClass().getName()).log(Level.INFO, "service bound and running. :)");
             } else {
                 //System.out.println("HelloWorldServer - Constructor(): create registry on port 1099");
@@ -108,8 +106,8 @@ public class PingServer {
             System.exit(-1);
         }
         //1. ============ Create Servant ============
-        PingServer hws = new PingServer(args);
+        DigLibServer dls = new DigLibServer(args);
         //2. ============ Rebind servant on rmiregistry ============
-        hws.rebindService();
+        dls.rebindService();
     }
 }

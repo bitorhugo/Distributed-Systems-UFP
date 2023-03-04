@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 source setenv.sh
-CURR_DIR=${JAVAPROJ}/src/edu/ufp/inf/sd/rmi/_03_pingpong
+CURR_DIR=${JAVAPROJ}/src/edu/ufp/inf/sd/rmi/_04_diglib
 RUNSCRIPTS=${CURR_DIR}/runscripts
 
 function trap_sigInt() {
