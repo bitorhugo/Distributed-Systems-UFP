@@ -12,23 +12,28 @@ import edu.ufp.inf.sd.rmi._04_diglib.server.user.RemoteUserNotFoundException;
 public class DigLibFactoryImpl extends UnicastRemoteObject implements DigLibFactoryRI {
 
     private DBMockupI db;
-    HashMap<User, DigLibSessionImpl> sessions;
+    HashMap<User, DigLibSessionImpl> sessions = new HashMap<>();
     
     public DigLibFactoryImpl() throws RemoteException {
         super();
         this.db = new DBMockup();
     }
-
+    
     @Override
     public DigLibSessionRI login(User user) throws RemoteException {
         if (this.db.exists(user.getUname(), user.getPword())) {
-            return this.sessions.containsKey(user)
-                ? this.sessions.get(user)
-                : this.sessions.put(user, new DigLibSessionImpl(this.db));
+            if (this.sessions.containsKey(user)) {
+                return this.sessions.get(user);
+            }
+            else {
+                DigLibSessionImpl session = new DigLibSessionImpl(this.db);
+                return session;
+            }
         }
         else {
             throw new RemoteUserNotFoundException("Wrong Credentials");
         }
     }
+
     
 }

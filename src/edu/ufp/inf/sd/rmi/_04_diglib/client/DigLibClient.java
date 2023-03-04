@@ -58,14 +58,13 @@ public class DigLibClient {
     }
     
     private void playService() {
-        User u = new User("Bitor", "123");
+        User u = new User("guest", "ufp");
         try {
             DigLibSessionRI session = this.stub.login(u);
-            session.search(null, null);
+            session.search("Distributed Systems: principles and paradigms", "Tanenbaum").forEach(System.out::println);;
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) {

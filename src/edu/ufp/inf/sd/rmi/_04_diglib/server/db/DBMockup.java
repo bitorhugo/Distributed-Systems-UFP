@@ -1,6 +1,9 @@
 package edu.ufp.inf.sd.rmi._04_diglib.server.db;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import edu.ufp.inf.sd.rmi._04_diglib.server.book.Book;
 import edu.ufp.inf.sd.rmi._04_diglib.server.user.User;
@@ -13,8 +16,8 @@ import edu.ufp.inf.sd.rmi._04_diglib.server.user.User;
  */
 public class DBMockup implements DBMockupI {
 
-    private final ArrayList<Book> books;// = new ArrayList();
-    private final ArrayList<User> users;// = new ArrayList();
+    private final List<Book> books;// = new ArrayList();
+    private final List<User> users;// = new ArrayList();
 
 
     /**
@@ -82,23 +85,26 @@ public class DBMockup implements DBMockupI {
      * @return
      */
     @Override
-    public Book[] select(String t, String a) {
-        Book[] abooks = null;
-        ArrayList<Book> vbooks = new ArrayList<>();
-        // Find books that match
-        for (int i = 0; i < books.size(); i++) {
-            Book book = (Book) books.get(i);
-            System.out.println("DB - select(): book[" + i + "] = " + book.getTitle() + ", " + book.getAuthor());
-            if (book.getTitle().toLowerCase().contains(t.toLowerCase()) && book.getAuthor().toLowerCase().contains(a.toLowerCase())) {
-                System.out.println("DB - select(): add book[" + i + "] = " + book.getTitle() + ", " + book.getAuthor());
-                vbooks.add(book);
-            }
-        }
+    public List<Book> select(String t, String a) {
+        return
+            this.books
+                .stream()
+                .filter((book) -> book.getAuthor().compareTo(a) == 0 && book.getTitle().compareTo(t) == 0)
+                .collect(Collectors.toList());
+        
+        // for (int i = 0; i < books.size(); i++) {
+        //     Book book = (Book) books.get(i);
+        //     System.out.println("DB - select(): book[" + i + "] = " + book.getTitle() + ", " + book.getAuthor());
+        //     if (book.getTitle().toLowerCase().contains(t.toLowerCase()) && book.getAuthor().toLowerCase().contains(a.toLowerCase())) {
+        //         System.out.println("DB - select(): add book[" + i + "] = " + book.getTitle() + ", " + book.getAuthor());
+        //         vbooks.add(book);
+        //     }
+        // }
         // Copy Vector->Array
-        abooks = new Book[vbooks.size()];
-        for (int i = 0; i < vbooks.size(); i++) {
-            abooks[i] = (Book) vbooks.get(i);
-        }
-        return abooks;
+        // abooks = new Book[vbooks.size()];
+        // for (int i = 0; i < vbooks.size(); i++) {
+        //     abooks[i] = (Book) vbooks.get(i);
+        // }
+        // return abooks;
     }
 }

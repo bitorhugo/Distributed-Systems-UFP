@@ -17,8 +17,8 @@ public class DigLibSessionImpl extends UnicastRemoteObject implements DigLibSess
     }
 
     @Override
-    public List<Book> search(String title, String author) {
-        return List.of(this.db.select(title, author));
+    public List<Book> search(String title, String author) throws RemoteException {
+        return this.db.select(title, author);
     }
     
 }
