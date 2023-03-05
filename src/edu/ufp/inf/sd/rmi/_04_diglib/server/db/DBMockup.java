@@ -119,5 +119,10 @@ public class DBMockup implements DBMockupI {
     public Optional<DigLibSessionRI> session(String username) {
         return Optional.ofNullable(this.sessions.get(username));
     }
+
+    @Override
+    public boolean hasSession(String username) {
+        return this.sessions.containsKey(username);
+    }
     
 }

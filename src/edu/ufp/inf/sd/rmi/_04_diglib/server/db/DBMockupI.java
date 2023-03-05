@@ -13,5 +13,6 @@ public interface DBMockupI {
     public List<Book> select(String t, String a);
     public void addSession(String username, DigLibSessionRI session);
     public void removeSession(String username);
+    public boolean hasSession(String username);
     public Optional<DigLibSessionRI> session(String username);
 }
