@@ -23,10 +23,7 @@ public class DigLibSessionImpl extends UnicastRemoteObject implements DigLibSess
     }
 
     public DigLibSessionImpl(DBMockupI db, User user, LocalDateTime sessionTimer) throws RemoteException {
-        super();
-        this.db = db;
-        this.user = user;
-        this.db.addSession(user.getUname(), this);
+        this(db, user);
         this.sessionTimer = sessionTimer;
     }
 
