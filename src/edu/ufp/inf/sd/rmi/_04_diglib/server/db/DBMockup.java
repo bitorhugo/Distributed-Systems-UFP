@@ -1,11 +1,12 @@
 package edu.ufp.inf.sd.rmi._04_diglib.server.db;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
 import edu.ufp.inf.sd.rmi._04_diglib.server.book.Book;
+import edu.ufp.inf.sd.rmi._04_diglib.server.session.DigLibSessionRI;
 import edu.ufp.inf.sd.rmi._04_diglib.server.user.User;
 
 /**
@@ -16,21 +17,17 @@ import edu.ufp.inf.sd.rmi._04_diglib.server.user.User;
  */
 public class DBMockup implements DBMockupI {
 
-    private final List<Book> books;// = new ArrayList();
-    private final List<User> users;// = new ArrayList();
-
-
+    private final List<Book> books = new ArrayList<>();;
+    private final List<User> users = new ArrayList<>();;
+    private HashMap<String, DigLibSessionRI> sessions = new HashMap<>();
+    
     /**
      * This constructor creates and inits the database with some books and users.
      */
     public DBMockup() {
-        books = new ArrayList<>();
-        users = new ArrayList<>();
-        //Add 3 books
         books.add(new Book("Distributed Systems: principles and paradigms", "Tanenbaum"));
         books.add(new Book("Distributed Systems: concepts and design", "Colouris"));
         books.add(new Book("Distributed Computing Networks", "Tanenbaum"));
-        //Add one user
         users.add(new User("guest", "ufp"));
     }
 
@@ -107,4 +104,20 @@ public class DBMockup implements DBMockupI {
         // }
         // return abooks;
     }
+
+    @Override
+    public void addSession(String username, DigLibSessionRI session) {
+        this.sessions.put(username, session);
+    }
+
+    @Override
+    public void removeSession(String username) {
+        this.sessions.remove(username);
+    }
+
+    @Override
+    public Optional<DigLibSessionRI> session(String username) {
+        return Optional.ofNullable(this.sessions.get(username));
+    }
+    
 }
