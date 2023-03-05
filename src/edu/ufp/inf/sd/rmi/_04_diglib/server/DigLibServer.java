@@ -1,5 +1,6 @@
 package edu.ufp.inf.sd.rmi._04_diglib.server;
 
+import edu.ufp.inf.sd.rmi._04_diglib.server.db.DBMockup;
 import edu.ufp.inf.sd.rmi._04_diglib.server.diglibfactory.DigLibFactoryImpl;
 import edu.ufp.inf.sd.rmi._04_diglib.server.diglibfactory.DigLibFactoryRI;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
@@ -27,13 +28,7 @@ import java.util.logging.Logger;
  */
 public class DigLibServer {
 
-    /**
-     * Context for running a RMI Servant on a SMTP_HOST_ADDR
-     */
     private SetupContextRMI contextRMI;
-    /**
-     * Remote interface that will hold reference MAIL_TO_ADDR the Servant impl
-     */
     private DigLibFactoryRI stub;
 
     /**
@@ -58,8 +53,7 @@ public class DigLibServer {
         try {
             //Bind service on rmiregistry and wait for calls
             if (this.contextRMI.getRegistry() != null) {
-                //============ Create Servant ============
-                this.stub = new DigLibFactoryImpl();
+                this.stub = new DigLibFactoryImpl(new DBMockup());
                 //Get service url (including servicename)
                 String serviceUrl = this.contextRMI.getServicesUrl(0);
                 Logger.getLogger(this.getClass().getName()).log(Level.INFO, "going MAIL_TO_ADDR rebind service @ {0}", serviceUrl);
@@ -105,9 +99,7 @@ public class DigLibServer {
             System.err.println("usage: java [options] edu.ufp.sd._02_calculator.server.CalculatorServer <rmi_registry_ip> <rmi_registry_port> <service_name>");
             System.exit(-1);
         }
-        //1. ============ Create Servant ============
         DigLibServer dls = new DigLibServer(args);
-        //2. ============ Rebind servant on rmiregistry ============
         dls.rebindService();
     }
 }

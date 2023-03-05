@@ -12,14 +12,15 @@ import edu.ufp.inf.sd.rmi._04_diglib.server.user.RemoteUserNotFoundException;
 public class DigLibFactoryImpl extends UnicastRemoteObject implements DigLibFactoryRI {
 
     private DBMockupI db;
-    private static final int SessionTimeInSeconds = 10;
+    static int SessionTimeInSeconds = 10;
     
-    public DigLibFactoryImpl() throws RemoteException {
+    public DigLibFactoryImpl(DBMockupI db) throws RemoteException {
         super();
-        this.db = new DBMockup();
+        this.db = db;
     }
 
     @Override
+    // login creates a session (factory method)
     public DigLibSessionRI login(User user) throws RemoteException {
         if (!this.db.exists(user.getUname(), user.getPword()))
             throw new RemoteUserNotFoundException("User not Found!");
