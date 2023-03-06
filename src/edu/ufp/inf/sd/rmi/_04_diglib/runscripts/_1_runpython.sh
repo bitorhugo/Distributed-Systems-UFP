@@ -9,7 +9,7 @@
 source ./setenv.sh server
 
 #Run python on *classes* or *dist* directory
-cd ${ABSPATH2CLASSES}
+cd ${XABSPATH2CLASSES}
 #cd ${ABSPATH2DIST}
 #clear
 echo ${ABSPATH2CLASSES}
