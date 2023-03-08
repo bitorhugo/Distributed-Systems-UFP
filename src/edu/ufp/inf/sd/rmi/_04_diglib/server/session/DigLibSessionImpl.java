@@ -36,7 +36,7 @@ public class DigLibSessionImpl extends UnicastRemoteObject implements DigLibSess
     }
 
     @Override
-    public void logout() throws RemoteException {
+    public synchronized void logout() throws RemoteException {
         this.db.removeSession(this.user.getUname());
     }
 
@@ -46,7 +46,11 @@ public class DigLibSessionImpl extends UnicastRemoteObject implements DigLibSess
         while (this.sessionTimer.isAfter(LocalDateTime.now())) {
         }
         System.out.println("Session Expired!");
-        this.db.removeSession(this.user.getUname());
+        try {
+            this.logout();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
     
 }
