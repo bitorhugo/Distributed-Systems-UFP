@@ -25,6 +25,11 @@ public class DigLibFactoryImpl extends UnicastRemoteObject implements DigLibFact
         if (!this.db.exists(user.getUname(), user.getPword()))
             throw new RemoteUserNotFoundException("User not Found!");
 
+        return this.getSession(user);
+    }
+
+    
+    private DigLibSessionRI getSession(User user) throws RemoteException {
         DigLibSessionRI session = this.db.session(user.getUname())
             .orElse(new DigLibSessionImpl(db,
                                           user,
@@ -32,7 +37,7 @@ public class DigLibFactoryImpl extends UnicastRemoteObject implements DigLibFact
 
         Thread t = new Thread((Runnable)session);
         t.start(); // launch session in new thread
-        
+
         return session;
     }
 
