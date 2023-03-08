@@ -61,7 +61,6 @@ public class DigLibClient {
         User u = new User("guest", "ufp");
         try {
             DigLibSessionRI session = this.stub.login(u);
-            session.logout();
             session.search("Distributed Systems: principles and paradigms", "Tanenbaum").forEach(System.out::println);;
         } catch (Exception e) {
             e.printStackTrace();
