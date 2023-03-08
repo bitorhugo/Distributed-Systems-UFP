@@ -15,7 +15,7 @@ export SCRIPT_ROLE=$1
 #@REM ======================== CHANGE BELOW ACCORDING YOUR PROJECT and PC SETTINGS ========================
 #@REM =====================================================================================================
 # @REM ==== PC STUFF ====
-export JDK=/usr/lib/jvm/java-11-openjdk
+export JDK=/usr/lib/jvm/java-19-openjdk
 #@REM These vars will be used MAIL_TO_ADDR check the output folder (whereto classes are generated)
 export NETBEANS=NetBeans
 export INTELLIJ=IntelliJ

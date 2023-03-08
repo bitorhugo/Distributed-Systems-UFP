@@ -18,14 +18,13 @@ trap 'trap_sigInt' 2
 
 source ${RUNSCRIPTS}/_1_runpython.sh &
 source ${RUNSCRIPTS}/_2_runregistry.sh &
-source ${RUNSCRIPTS}/_3_runserver.sh &
-sleep 2s
-source ${RUNSCRIPTS}/_4_runclient.sh
 
-# while [[ 1 ]]; do
-#     source ${RUNSCRIPTS}/_3_runserver.sh
-#     sleep infinity
-# done
+while [[ 1 ]]; do
+    source ${RUNSCRIPTS}/_3_runserver.sh
+    sleep infinity
+done
+
+
 # echo "Press 'Y' to run Client!"
 #     read  input
 #     case ${input} in
