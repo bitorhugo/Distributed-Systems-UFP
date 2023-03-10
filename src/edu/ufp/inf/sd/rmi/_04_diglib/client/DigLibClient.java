@@ -58,12 +58,18 @@ public class DigLibClient {
     }
     
     private void playService() {
-        User u = new User("guest", "ufp");
+        User u = new User("bitor", "pass");
         try {
             DigLibSessionRI session = this.stub.login(u);
-            session.search("Distributed Systems: principles and paradigms", "Tanenbaum").forEach(System.out::println);;
+            session.search("Distributed Systems: principles and paradigms", "Tanenbaum");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Creating new User...");
+            try {
+                DigLibSessionRI session = this.stub.register(u);
+                session.search("Distributed Systems: principles and paradigms", "Tanenbaum").forEach(System.out::println);;
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 

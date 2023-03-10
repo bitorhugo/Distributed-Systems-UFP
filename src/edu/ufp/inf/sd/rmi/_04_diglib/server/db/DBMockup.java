@@ -3,6 +3,7 @@ package edu.ufp.inf.sd.rmi._04_diglib.server.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import edu.ufp.inf.sd.rmi._04_diglib.server.book.Book;
@@ -19,7 +20,7 @@ public class DBMockup implements DBMockupI {
 
     private final List<Book> books = new ArrayList<>();;
     private final List<User> users = new ArrayList<>();;
-    private HashMap<String, DigLibSessionRI> sessions = new HashMap<>();
+    private Map<String, DigLibSessionRI> sessions = new HashMap<>();
     
     /**
      * This constructor creates and inits the database with some books and users.

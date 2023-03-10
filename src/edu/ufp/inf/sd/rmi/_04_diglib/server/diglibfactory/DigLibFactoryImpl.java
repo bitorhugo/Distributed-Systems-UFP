@@ -28,17 +28,24 @@ public class DigLibFactoryImpl extends UnicastRemoteObject implements DigLibFact
         return this.getSession(user);
     }
 
+    @Override
+    public DigLibSessionRI register(User user) throws RemoteException {
+        this.db.register(user.getUname(), user.getPword());
+        return this.login(user);
+    }
     
     private DigLibSessionRI getSession(User user) throws RemoteException {
         DigLibSessionRI session = this.db.session(user.getUname())
             .orElse(new DigLibSessionImpl(db,
                                           user,
                                           LocalDateTime.now().plusSeconds(SessionTimeInSeconds)));
-
+        
         Thread t = new Thread((Runnable)session);
         t.start(); // launch session in new thread
-
+        
         return session;
     }
+
+
 
 }
