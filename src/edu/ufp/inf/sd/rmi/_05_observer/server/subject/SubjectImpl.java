@@ -25,11 +25,15 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
     @Override
     public void attach(ObserverRI obs) throws RemoteException {
         this.observerList.add(obs);
+        System.out.println("Observer attached");
+        System.out.println("Observer list size: " + this.observerList.size());
     }
 
     @Override
     public void detach(ObserverRI obs) throws RemoteException {
         this.observerList.remove(obs);
+        System.out.println("Observer attached");
+        System.out.println("Observer list size: " + this.observerList.size());
     }
 
     @Override
@@ -40,17 +44,13 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
     @Override
     public void setState(State state) throws RemoteException {
         this.state = state;
-    }
-
-    @Override
-    public void listObservers() {
-        System.out.println("Number of Observers:" + this.observerList.size());
+        this.notifyObservers();
     }
 
     public void notifyObservers() {
         this.observerList.forEach(o -> {
             try {
-                o.getSubject().setState(this.state);
+                o.update(); // call update on every observer
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
