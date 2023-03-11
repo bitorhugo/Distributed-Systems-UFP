@@ -21,6 +21,8 @@ public class ObserverImpl extends UnicastRemoteObject implements ObserverRI {
         this.username = username;
         this.obsGUI = obsGUI;
         this.subject = subject;
+        
+        this.subject.attach(this); // attach observer
     }
 
     @Override

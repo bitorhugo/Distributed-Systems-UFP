@@ -42,6 +42,11 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
         this.state = state;
     }
 
+    @Override
+    public void listObservers() {
+        System.out.println("Number of Observers:" + this.observerList.size());
+    }
+
     public void notifyObservers() {
         this.observerList.forEach(o -> {
             try {

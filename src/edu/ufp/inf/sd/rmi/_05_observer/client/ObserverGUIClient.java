@@ -79,6 +79,8 @@ public class ObserverGUIClient extends javax.swing.JFrame {
             String username = this.jTextFieldUsername.getText();
             //observer = new ObserverImpl(username, this, args);
             this.observer = new ObserverImpl(username, this, this.subjectRI);
+
+            this.subjectRI.listObservers();
             System.out.println("Observer Created");
         } catch (Exception e) {
             Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, e);
