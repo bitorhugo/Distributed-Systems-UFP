@@ -42,7 +42,7 @@ public class ObserverGUIClient extends javax.swing.JFrame {
      */
     private SubjectRI subjectRI;
 
-    private ObserverRI observer;
+    private ObserverImpl observer;
 
     /**
      * Creates new form ChatClientFrame
@@ -79,8 +79,6 @@ public class ObserverGUIClient extends javax.swing.JFrame {
             String username = this.jTextFieldUsername.getText();
             //observer = new ObserverImpl(username, this, args);
             this.observer = new ObserverImpl(username, this, this.subjectRI);
-
-            this.subjectRI.listObservers();
             System.out.println("Observer Created");
         } catch (Exception e) {
             Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, e);
@@ -290,10 +288,14 @@ public class ObserverGUIClient extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldMsgKeyPressed
 
     private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
-        // TODO add your handling code here:
+        try {
+            this.observer.getSubject().detach(this.observer);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         this.dispose();
         System.exit(0);
-    }//GEN-LAST:event_jMenuItemExitActionPerformed
+    }
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
