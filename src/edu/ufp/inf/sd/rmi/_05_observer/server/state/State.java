@@ -15,8 +15,9 @@ import java.io.Serializable;
  * @author rui
  */
 public class State implements Serializable {
-    private String info;
+
     private String id;
+    private String info;
 
     /**
      * 
@@ -50,5 +51,10 @@ public class State implements Serializable {
      */
     public void setInfo(String info){
         this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return this.id + ": " + this.info;
     }
 }

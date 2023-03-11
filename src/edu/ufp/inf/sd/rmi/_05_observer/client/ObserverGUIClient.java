@@ -281,12 +281,13 @@ public class ObserverGUIClient extends javax.swing.JFrame {
                                                  ": " +
                                                  this.jTextFieldMsg.getText() +
                                                  "\n");
-                this.jTextFieldMsg.setText(""); // clear msg field
             }
             // notify subject
             try {
                 State s = new State(this.jTextFieldUsername.getText(), this.jTextFieldMsg.getText());
                 this.observer.getSubject().setState(s);
+
+                this.jTextFieldMsg.setText(""); // clear msg field
             } catch (RemoteException ex) {
                 Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -347,7 +348,7 @@ public class ObserverGUIClient extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+
     private javax.swing.JButton jButtonSend;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabelUserID;
@@ -359,8 +360,8 @@ public class ObserverGUIClient extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemPaste;
     private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaChatHistory;
+    protected javax.swing.JTextArea jTextAreaChatHistory;
     private javax.swing.JTextField jTextFieldMsg;
     private javax.swing.JTextField jTextFieldUsername;
-    // End of variables declaration//GEN-END:variables
+
 }

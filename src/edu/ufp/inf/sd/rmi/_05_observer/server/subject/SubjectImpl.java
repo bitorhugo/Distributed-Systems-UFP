@@ -43,6 +43,7 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
 
     @Override
     public void setState(State state) throws RemoteException {
+        System.out.println(state);
         this.state = state;
         this.notifyObservers();
     }

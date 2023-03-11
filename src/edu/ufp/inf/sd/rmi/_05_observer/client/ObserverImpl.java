@@ -35,7 +35,7 @@ public class ObserverImpl extends UnicastRemoteObject implements ObserverRI {
 
     @Override
     public void update() throws RemoteException {
-
+        this.obsGUI.jTextAreaChatHistory.append(this.subject.getState().toString() + "\n");
     }
 
 }
