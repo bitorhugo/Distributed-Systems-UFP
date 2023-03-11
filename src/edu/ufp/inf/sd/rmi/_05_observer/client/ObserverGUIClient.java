@@ -273,11 +273,17 @@ public class ObserverGUIClient extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSendActionPerformed
 
     private void jTextFieldMsgKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMsgKeyPressed
-        // TODO add your handling code here:
-        char c = evt.getKeyChar();
+        char c = evt.getKeyChar(); // retrieve keyboard input from user
         if (c == '\n' || c == '\r') {
-            //this.jTextArea1.append(this.jTextField1.getText() + "\n");
-            //this.jTextField1.setText("");
+            // handle local chat
+            if (!this.jTextFieldMsg.getText().isBlank()) {
+                this.jTextAreaChatHistory.append(this.jTextFieldUsername.getText() +
+                                                 ": " +
+                                                 this.jTextFieldMsg.getText() +
+                                                 "\n");
+                this.jTextFieldMsg.setText(""); // clear msg field
+            }
+            // notify subject
             try {
                 State s = new State(this.jTextFieldUsername.getText(), this.jTextFieldMsg.getText());
                 this.observer.getSubject().setState(s);
@@ -298,8 +304,8 @@ public class ObserverGUIClient extends javax.swing.JFrame {
     }
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu1ActionPerformed
+        
+    }
 
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
         // TODO add your handling code here:
