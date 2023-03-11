@@ -13,11 +13,11 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
     private State state;
     private List<ObserverRI> observerList = new ArrayList<>();
     
-    public SubjectImpl() throws RemoteException{
+    public SubjectImpl() throws RemoteException {
         super();
     }
 
-    public SubjectImpl(State state) throws RemoteException{
+    public SubjectImpl(State state) throws RemoteException {
         super();
         this.state = state;
     }
@@ -41,4 +41,15 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
     public void setState(State state) throws RemoteException {
         this.state = state;
     }
+
+    public void notifyObservers() {
+        this.observerList.forEach(o -> {
+            try {
+                o.getSubject().setState(this.state);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
 }

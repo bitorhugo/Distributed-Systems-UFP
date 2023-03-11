@@ -22,7 +22,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.NotBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
@@ -32,7 +31,7 @@ import javax.swing.JFileChooser;
 /**
  * @author rjm
  */
-public class ObserverGuiClient extends javax.swing.JFrame {
+public class ObserverGUIClient extends javax.swing.JFrame {
 
     /**
      * Context for connecting a RMI client to a RMI Servant
@@ -50,7 +49,7 @@ public class ObserverGuiClient extends javax.swing.JFrame {
      *
      * @param args main args with ip, port and service name
      */
-    public ObserverGuiClient(String args[]) {
+    public ObserverGUIClient(String args[]) {
         //1. Init the GUI components
         initComponents();
         //2. Init the RMI context (load security manager, lookup subject, etc.)
@@ -80,8 +79,9 @@ public class ObserverGuiClient extends javax.swing.JFrame {
             String username = this.jTextFieldUsername.getText();
             //observer = new ObserverImpl(username, this, args);
             this.observer = new ObserverImpl(username, this, this.subjectRI);
+            System.out.println("Observer Created");
         } catch (Exception e) {
-            Logger.getLogger(ObserverGuiClient.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -93,7 +93,7 @@ public class ObserverGuiClient extends javax.swing.JFrame {
             //Lookup service on rmiregistry and wait for calls
             if (registry != null) {
                 //Get service url (including servicename)
-                String serviceUrl=contextRMI.getServicesUrl(0);
+                String serviceUrl = contextRMI.getServicesUrl(0);
                 Logger.getLogger(this.getClass().getName()).log(Level.INFO, "going to lookup service @ {0}", serviceUrl);
 
                 //============ Get proxy to HelloWorld service ============
@@ -109,8 +109,13 @@ public class ObserverGuiClient extends javax.swing.JFrame {
 
 
     protected void updateTextArea() {
-        String msg="[" + this.observer.getLastObserverState().getId() + "] " + this.observer.getLastObserverState().getInfo();
-        this.jTextAreaChatHistory.append(msg + '\n');
+        try {
+            String msg = "[" + this.observer.getLastObserverState().getId() + "] " + this.observer.getLastObserverState().getInfo();
+            this.jTextAreaChatHistory.append(msg + '\n');
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -122,20 +127,20 @@ public class ObserverGuiClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1=new javax.swing.JFileChooser();
-        jScrollPane1=new javax.swing.JScrollPane();
-        jTextAreaChatHistory=new javax.swing.JTextArea();
-        jButtonSend=new javax.swing.JButton();
-        jTextFieldMsg=new javax.swing.JTextField();
-        jLabelUserID=new javax.swing.JLabel();
-        jTextFieldUsername=new javax.swing.JTextField();
-        jMenuBar1=new javax.swing.JMenuBar();
-        jMenu1=new javax.swing.JMenu();
-        jMenuItemExit=new javax.swing.JMenuItem();
-        jMenuItemSave=new javax.swing.JMenuItem();
-        jMenu2=new javax.swing.JMenu();
-        jMenuItemCopy=new javax.swing.JMenuItem();
-        jMenuItemPaste=new javax.swing.JMenuItem();
+        jFileChooser1        = new javax.swing.JFileChooser();
+        jScrollPane1         = new javax.swing.JScrollPane();
+        jTextAreaChatHistory = new javax.swing.JTextArea();
+        jButtonSend          = new javax.swing.JButton();
+        jTextFieldMsg        = new javax.swing.JTextField();
+        jLabelUserID         = new javax.swing.JLabel();
+        jTextFieldUsername   = new javax.swing.JTextField();
+        jMenuBar1            = new javax.swing.JMenuBar();
+        jMenu1               = new javax.swing.JMenu();
+        jMenuItemExit        = new javax.swing.JMenuItem();
+        jMenuItemSave        = new javax.swing.JMenuItem();
+        jMenu2               = new javax.swing.JMenu();
+        jMenuItemCopy        = new javax.swing.JMenuItem();
+        jMenuItemPaste       = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -259,10 +264,11 @@ public class ObserverGuiClient extends javax.swing.JFrame {
         //    this.jTextArea1.append(this.jTextField1.getText() + "\n");
         //    this.jTextField1.setText("");
         try {
+            System.out.println("Msg sent");
             State s = new State(this.jTextFieldUsername.getText(), this.jTextFieldMsg.getText());
-            this.observer.subjectRI.setState(s);
+            this.observer.getSubject().setState(s);
         } catch (RemoteException ex) {
-            Logger.getLogger(ObserverGuiClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonSendActionPerformed
 
@@ -274,9 +280,9 @@ public class ObserverGuiClient extends javax.swing.JFrame {
             //this.jTextField1.setText("");
             try {
                 State s = new State(this.jTextFieldUsername.getText(), this.jTextFieldMsg.getText());
-                this.observer.subjectRI.setState(s);
+                this.observer.getSubject().setState(s);
             } catch (RemoteException ex) {
-                Logger.getLogger(ObserverGuiClient.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jTextFieldMsgKeyPressed
@@ -304,12 +310,12 @@ public class ObserverGuiClient extends javax.swing.JFrame {
                 pw.println(this.jTextAreaChatHistory.getText());
             }
         } catch (IOException ex) {
-            Logger.getLogger(ObserverGuiClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 fw.close();
             } catch (IOException ex) {
-                Logger.getLogger(ObserverGuiClient.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jMenuItemSaveActionPerformed
@@ -323,9 +329,9 @@ public class ObserverGuiClient extends javax.swing.JFrame {
             @Override
             public void run() {
                 if (args.length >= 3) {
-                    new ObserverGuiClient(args).setVisible(true);
+                    new ObserverGUIClient(args).setVisible(true);
                 } else {
-                    System.out.println(ObserverGuiClient.class + ": call must have the following args: <rmi_ip> <rmi_port> <rmi_service_prefix>");
+                    System.out.println(ObserverGUIClient.class + ": call must have the following args: <rmi_ip> <rmi_port> <rmi_service_prefix>");
                 }
             }
         });

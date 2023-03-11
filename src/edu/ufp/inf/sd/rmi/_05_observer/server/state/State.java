@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author rui
  */
 public class State implements Serializable {
-    private String msg;
+    private String info;
     private String id;
 
     /**
@@ -23,9 +23,9 @@ public class State implements Serializable {
      * @param id
      * @param m 
      */
-    public State(String id, String m) {
+    public State(String id, String info) {
         this.id = id;
-        this.msg = m;
+        this.info = info;
     }
 
     /**
@@ -41,14 +41,14 @@ public class State implements Serializable {
      * @return 
      */
     public String getInfo(){
-        return this.msg;
+        return this.info;
     }
 
     /**
      * 
      * @param m 
      */
-    public void setInfo(String m){
-        this.msg = m;
+    public void setInfo(String info){
+        this.info = info;
     }
 }
