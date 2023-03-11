@@ -25,14 +25,17 @@ public class ObserverImpl extends UnicastRemoteObject implements ObserverRI {
         this.subject.attach(this); // attach observer
     }
 
-    @Override
-    public SubjectRI getSubject() throws RemoteException {
+    public SubjectRI getSubject() {
         return this.subject;
     }
 
-    @Override
-    public State getLastObserverState() throws RemoteException {
+    public State getLastObserverState() throws RemoteException{
         return this.subject.getState();
+    }
+
+    @Override
+    public void update() throws RemoteException {
+
     }
 
 }
