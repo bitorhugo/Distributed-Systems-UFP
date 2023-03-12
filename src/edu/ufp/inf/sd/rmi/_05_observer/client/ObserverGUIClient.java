@@ -248,23 +248,17 @@ public class ObserverGUIClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItemCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCopyActionPerformed
-        // TODO add your handling code here:
+    private void jMenuItemCopyActionPerformed(java.awt.event.ActionEvent evt) {
         this.jTextAreaChatHistory.selectAll();
-        this.jTextAreaChatHistory.copy();
-    }//GEN-LAST:event_jMenuItemCopyActionPerformed
+        this.jTextAreaChatHistory.copy(); // TODO: ?????
+    }
 
-    private void jMenuItemPasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPasteActionPerformed
+    private void jMenuItemPasteActionPerformed(java.awt.event.ActionEvent evt) {
         this.jTextAreaChatHistory.paste();
-    }//GEN-LAST:event_jMenuItemPasteActionPerformed
+    }
 
     private void jButtonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSendActionPerformed
         if (!this.jTextFieldMsg.getText().isBlank()) {
-            // this.jTextAreaChatHistory.append(this.jTextFieldUsername.getText() +
-            //                                  ": " +
-            //                                  this.jTextFieldMsg.getText() +
-            //                                  "\n");
-
             try {
                 State s = new State(this.jTextFieldUsername.getText(), this.jTextFieldMsg.getText());
                 this.observer.getSubject().setState(s);
@@ -278,15 +272,8 @@ public class ObserverGUIClient extends javax.swing.JFrame {
     private void jTextFieldMsgKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMsgKeyPressed
         char c = evt.getKeyChar(); // retrieve keyboard input from user
         if (c == '\n' || c == '\r') {
-            // handle local chat
             if (!this.jTextFieldMsg.getText().isBlank()) {
-                // this.jTextAreaChatHistory.append(this.jTextFieldUsername.getText() +
-                //                                  ": " +
-                //                                  this.jTextFieldMsg.getText() +
-                //                                  "\n");
-
-                // notify subject
-                try {
+                try { // notify subject
                     State s = new State(this.jTextFieldUsername.getText(), this.jTextFieldMsg.getText());
                     this.observer.getSubject().setState(s);
 
@@ -323,6 +310,7 @@ public class ObserverGUIClient extends javax.swing.JFrame {
                 fw = new FileWriter(f);
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println(this.jTextAreaChatHistory.getText());
+                pw.close();
             }
         } catch (IOException ex) {
             Logger.getLogger(ObserverGUIClient.class.getName()).log(Level.SEVERE, null, ex);
