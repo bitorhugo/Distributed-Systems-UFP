@@ -17,12 +17,11 @@ public class ObserverImpl extends UnicastRemoteObject implements ObserverRI {
     }
     
     public ObserverImpl(String username, ObserverGUIClient obsGUI, SubjectRI subject) throws RemoteException {
-        super();
+        this();
         this.username = username;
         this.obsGUI = obsGUI;
         this.subject = subject;
-        
-        this.subject.attach(this); // attach observer
+        this.subject.attach(this); // attach observer        
     }
 
     public SubjectRI getSubject() {
