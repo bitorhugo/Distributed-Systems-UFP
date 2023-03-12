@@ -32,7 +32,7 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
     @Override
     public void detach(ObserverRI obs) throws RemoteException {
         this.observerList.remove(obs);
-        System.out.println("Observer attached");
+        System.out.println("Observer detatched");
         System.out.println("Observer list size: " + this.observerList.size());
     }
 
