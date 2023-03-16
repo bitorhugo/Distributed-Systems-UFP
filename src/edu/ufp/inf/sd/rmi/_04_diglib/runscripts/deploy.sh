@@ -18,9 +18,9 @@ trap 'trap_sigInt' 2
 
 source ${RUNSCRIPTS}/_1_runpython.sh &
 source ${RUNSCRIPTS}/_2_runregistry.sh &
+source ${RUNSCRIPTS}/_3_runserver.sh
 
 while [[ 1 ]]; do
-    source ${RUNSCRIPTS}/_3_runserver.sh
     sleep infinity
 done
 

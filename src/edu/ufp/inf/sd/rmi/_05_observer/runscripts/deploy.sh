@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
-source setenv.sh
+
+source /home/bitor/projects/SD/src/edu/ufp/inf/sd/rmi/_05_observer/runscripts/setenv.sh
+source /home/bitor/projects/JCompile/build.sh -n ${JAVAPROJ_NAME} -r ${JAVAPROJ}
 CURR_DIR=${JAVAPROJ}/src/edu/ufp/inf/sd/rmi/_04_diglib
 RUNSCRIPTS=${CURR_DIR}/runscripts
 
@@ -20,7 +22,7 @@ source ${RUNSCRIPTS}/_1_runpython.sh &
 source ${RUNSCRIPTS}/_2_runregistry.sh &
 
 while [[ 1 ]]; do
-    source ${RUNSCRIPTS}/_3_runserver.sh
+    source ${RUNSCRIPTS}/_3_runserver.sh 
     sleep infinity
 done
 

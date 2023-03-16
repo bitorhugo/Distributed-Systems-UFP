@@ -1,5 +1,4 @@
 package edu.ufp.inf.sd.rmi._01_helloworld.client;
-
 import edu.ufp.inf.sd.rmi._01_helloworld.server.HelloWorldRI;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
 import java.rmi.RemoteException;

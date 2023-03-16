@@ -25,7 +25,7 @@ export USERNAME=arch-bitor
 
 #@REM ==== JAVA NAMING STUFF ====
 export JAVAPROJ_NAME=SD
-export JAVAPROJ=/home/bitor/projects/${JAVAPROJ_NAME}
+export JAVAPROJ=/${JAVAPROJ_NAME}
 
 export PACKAGE=_04_diglib
 export PACKAGE_PREFIX=edu.ufp.inf.sd.rmi
