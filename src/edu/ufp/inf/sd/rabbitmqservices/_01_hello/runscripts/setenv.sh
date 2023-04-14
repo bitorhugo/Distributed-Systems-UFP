@@ -52,8 +52,8 @@ if [[ "${CURRENT_IDE}" == "${NETBEANS}" ]]; then
     export JAVAPROJ_DIST=dist
     export JAVAPROJ_DIST_LIB=lib
 elif [[ "${CURRENT_IDE}" == "${INTELLIJ}" ]]; then
-    export JAVAPROJ_SRC=src/main/java
-    export JAVAPROJ_CLASSES=target/classes
+    export JAVAPROJ_SRC=src
+    export JAVAPROJ_CLASSES=out/production/${JAVAPROJ_NAME}/
     export JAVAPROJ_DIST=out/artifacts/${JAVAPROJ_NAME}
     export JAVAPROJ_DIST_LIB=lib
 fi
